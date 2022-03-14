@@ -39,10 +39,10 @@ dfeval = pd.read_csv('https://storage.googleapis.com/tf-datasets/titanic/eval.cs
 print(dftrain)
 
 # pop()函数:剔除文件中的survived数据
-y_train = dftrain.pop('survived')
-print(dftrain)
-# y_eval = dfeval.pop('survived')
-# print(y_eval)
+# y_train = dftrain.pop('survived')
+# print(dftrain)
+y_eval = dfeval.pop('survived')
+print(y_eval)
 
 # loc[索引]来查找具体的某一组数据
 print(dftrain.loc[0])
