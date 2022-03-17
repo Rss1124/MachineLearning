@@ -8,7 +8,7 @@ from IPython.core.display import clear_output
 
 dftrain = pd.read_csv('https://storage.googleapis.com/tf-datasets/titanic/train.csv')
 dfeval = pd.read_csv('https://storage.googleapis.com/tf-datasets/titanic/eval.csv')
-y_train = dftrain.pop('survived')
+y_train = dftrain.pop('survived')  # y_train就是标签,代表的是"幸存情况"
 y_eval = dfeval.pop('survived')
 
 # 将待处理的数据划分为'非数值数据'和'数值数据'
@@ -30,6 +30,7 @@ print(feature_columns)
 def make_input_fn(data_df, label_df, num_epochs=10, shuffle=True, batch_size=32):
     def input_function():
         ds = tf.data.Dataset.from_tensor_slices((dict(data_df), label_df))  # 创建一个可以用于训练的数据集(tf.data.Dataset object)
+        ds = ds.cache('E:\Projects\PythonProjects\MachineLearning\cache\TempFile')
         if shuffle:
             ds = ds.shuffle(1000)  # 将数据集顺序打乱
         ds = ds.batch(batch_size).repeat(num_epochs)  # 将数据集撕裂成32批(防止一次性输入到模型的数据过大,内存承受不住)
@@ -51,4 +52,3 @@ result = list(linear_est.predict(eval_input_fn))
 print("测试数据: " + str(dfeval.loc[3]))
 print("测试对象实际是否存活: " + str(y_eval.loc[3]))
 print("预测存活率: " + str(result[3]["probabilities"][1]))
-
