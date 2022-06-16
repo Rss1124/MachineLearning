@@ -19,7 +19,8 @@ fashion_mnist = keras.datasets.fashion_mnist
 # plt.colorbar()
 # plt.grid(False)
 # plt.show()
-
+class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
+               'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
 """
 数据预处理preprocessing
@@ -32,7 +33,7 @@ test_images = test_images / 255.0
 
 
 """
-通过调用kerasAPI来创建一个神经元网络模型Model
+设置层,通过调用kerasAPI来创建一个神经元网络模型Model
 """
 model = keras.Sequential([
     keras.layers.Flatten(input_shape=(28, 28)),  # input layer
@@ -59,55 +60,55 @@ model.fit(train_images, train_label, epochs=10)
 """
 测试模型:Evaluating the Model
 """
-test_loss, test_acc = model.evaluate(test_images, test_label, verbose=1)
+test_loss, test_acc = model.evaluate(test_images, test_label, verbose=2)
 print('Test accuracy: ', test_acc)
 
 
 """
-对数据进行预测:Making Predictions
+进行预测:
+在模型经过训练后,您可以使用它对一些图像进行预测.模型具有线性输出,即"logits"您可以附加一个softmax层,将"logits"转换成更容易理解的概率.
 """
-# predictions = model.predict(test_images)
-# predictions[0]  # predictions[0]->9
-# test_label[0]  # test_label[0]=9
+probability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
+predictions = probability_model.predict(test_images)
+# print(np.argmax(predictions[0]))
+# print(test_label[0])
 
+def plot_image(i, predictions_array, true_label, img):
+    predictions_array, true_label, img = predictions_array, true_label[i], img[i]
+    plt.grid(False)
+    plt.xticks([])
+    plt.yticks([])
+
+    plt.imshow(img, cmap=plt.cm.binary)
+    predicted_label = np.argmax(predictions_array)
+    if predicted_label == true_label:
+        color = 'blue'
+    else:
+        color = 'red'
+
+    plt.xlabel("{} {:2.0f}% ({})".format(class_names[predicted_label],
+                                         100*np.max(predictions_array),
+                                         class_names[true_label]), color=color)
+
+def plot_value_array(i, predictions_array, true_label):
+    predictions_array, true_label = predictions_array, true_label[i]
+    plt.grid(False)
+    plt.xticks(range(10))
+    plt.yticks([])
+    thisplot = plt.bar(range(10), predictions_array, color="#777777")
+    plt.ylim([0, 1])
+    predicted_label = np.argmax(predictions_array)
+    thisplot[predicted_label].set_color('red')
+    thisplot[true_label].set_color('blue')
 
 """
 Verifying Predictions: 证明预测结果
 """
-COLOR = 'white'
-plt.rcParams['text.color'] = COLOR
-plt.rcParams['axes.labelcolor'] = COLOR
 
-
-def predict(model, image, correct_label):
-    class_name = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']  # 将标签用中文记录下来
-    prediction = model.predict(np.array([image]))
-    prediction_class = class_name[np.argmax(prediction)]
-    show_image(image, class_name[correct_label], prediction_class)
-
-
-def show_image(img, label, guess):
-    plt.figure()
-    plt.imshow(img, cmap=plt.cm.binary)
-    plt.colorbar()
-    plt.grid(False)
-    print("Expected: " + str(label))
-    print("Guess: " + str(guess))
-    plt.show()
-
-
-def get_number():
-    while True:
-        num = input("Pick a number: ")
-        if num.isdigit():
-            num = int(num)
-            if 0 <= num <= 1000:
-                return int(num)
-        else:
-            print("try again")
-
-
-num = get_number()
-image = test_images[num]
-label = test_label[num]
-predict(model, image, label)
+i = 0
+plt.figure(figsize=(6, 3))
+plt.subplot(1, 2, 1)
+plot_image(i, predictions[i], test_label, test_images)
+plt.subplot(1, 2, 2)
+plot_value_array(i, predictions[i],  test_label)
+plt.show()
