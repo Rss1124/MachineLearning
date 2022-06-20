@@ -66,6 +66,7 @@ print('Test accuracy: ', test_acc)
 
 """
 进行预测:
+编写预测函数
 在模型经过训练后,您可以使用它对一些图像进行预测.模型具有线性输出,即"logits"您可以附加一个softmax层,将"logits"转换成更容易理解的概率.
 """
 probability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
@@ -105,10 +106,43 @@ def plot_value_array(i, predictions_array, true_label):
 Verifying Predictions: 证明预测结果
 """
 
-i = 0
-plt.figure(figsize=(6, 3))
-plt.subplot(1, 2, 1)
-plot_image(i, predictions[i], test_label, test_images)
-plt.subplot(1, 2, 2)
-plot_value_array(i, predictions[i],  test_label)
+# i = 0
+# plt.figure(figsize=(6, 3))
+# plt.subplot(1, 2, 1)
+# plot_image(i, predictions[i], test_label, test_images)
+# plt.subplot(1, 2, 2)
+# plot_value_array(i, predictions[i],  test_label)
+# plt.show()
+#
+# i = 12
+# plt.figure(figsize=(6, 3))
+# plt.subplot(1, 2, 1)
+# plot_image(i, predictions[i], test_label, test_images)
+# plt.subplot(1, 2, 2)
+# plot_value_array(i, predictions[i],  test_label)
+# plt.show()
+
+num_rows = 5
+num_cols = 3
+num_images = num_rows*num_cols
+plt.figure(figsize=(2*2*num_cols, 2*num_rows))
+for i in range(num_images):
+    plt.subplot(num_rows, 2*num_cols, 2*i+1)
+    plot_image(i, predictions[i], test_label, test_images)
+    plt.subplot(num_rows, 2*num_cols, 2*i+2)
+    plot_value_array(i, predictions[i], test_label)
+plt.tight_layout
 plt.show()
+
+
+"""
+最后，使用训练好的模型对单个图像进行预测
+"""
+img = test_images[1]
+#tf.keras 模型经过了优化，可同时对一个批或一组样本进行预测。因此，即便您只使用一个图像，您也需要将其添加到列表中：
+img = (np.expand_dims(img, 0))
+predictions_single = probability_model.predict(img)
+print(predictions_single)
+plot_value_array(1, predictions_single[0], test_label)
+_ = plt.xticks(range(10), class_names, rotation=45)
+print(np.argmax(predictions_single[0]))
