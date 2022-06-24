@@ -66,3 +66,65 @@ model.summary()
 model.compile(optimizer='adam',
               loss='binary_crossentropy',
               metrics=['accuracy'])
+
+"""
+创建验证集
+通过从原始训练数据中分离 10,000 个样本来创建一个验证集
+"""
+x_val = train_data[:10000]
+partial_x_train = train_data[10000:]
+
+y_val = train_labels[:10000]
+partial_y_train = train_labels[10000:]
+
+"""
+训练模型
+"""
+history = model.fit(partial_x_train,
+                    partial_y_train,
+                    epochs=40,
+                    batch_size=512,
+                    validation_data=(x_val, y_val),
+                    verbose=1)
+
+"""
+评估模型
+创建一个准确率（accuracy）和损失值（loss）随时间变化的图表
+model.fit() 返回一个 History 对象,该对象包含一个字典,其中包含训练阶段所发生的一切事件:
+"""
+results = model.evaluate(test_data,  test_labels, verbose=2)
+print(results)
+
+history_dict = history.history
+history_dict.keys()
+
+import matplotlib.pyplot as plt
+
+acc = history_dict['accuracy']
+val_acc = history_dict['val_accuracy']
+loss = history_dict['loss']
+val_loss = history_dict['val_loss']
+
+epochs = range(1, len(acc) + 1)
+
+# “bo”代表 "蓝点"
+plt.plot(epochs, loss, 'bo', label='Training loss')
+# b代表“蓝色实线”
+plt.plot(epochs, val_loss, 'b', label='Validation loss')
+plt.title('Training and validation loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+
+plt.show()
+
+plt.clf()   # 清除数字
+
+plt.plot(epochs, acc, 'bo', label='Training acc')
+plt.plot(epochs, val_acc, 'b', label='Validation acc')
+plt.title('Training and validation accuracy')
+plt.xlabel('Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+
+plt.show()
