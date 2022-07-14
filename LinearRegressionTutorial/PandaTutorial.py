@@ -64,5 +64,36 @@ new_df = df.loc[(df['Type 1'] == 'Grass') & (df['Type 2'] == 'Poison')]
 # tip: 可以试试把&换成|试试运行结果是什么
 print("Type 1为Grass以及Type 2为Poison的元素如下:\n")
 print(new_df.head(5))
-print("将过滤后的数据另存为一个新的csv文件,记得删除它\n")
+print("将筛选后的数据另存为一个新的csv文件,记得删除它\n")
 new_df.to_csv('filtered.csv')
+df = df.loc[~df['Name'].str.contains('Mega')]
+# tip: ~df['Name'].str.contains('Mega')中~表示否的意思,如果用!则会报错
+# tip: 可以import re,里面的方法更多
+print("将Name中带有mega关键字的数据过滤掉后的情况如下:\n")
+print(df.head(5))
+
+# 更改数据
+df.loc[df['Type 1'] == 'Fire', 'Type 1'] = 'Flamer'
+print("将'Type 1'为'Fire'的对象里的'Type 1'更改为'Flamer'\n")
+print(df.head(8))
+df.loc[df['Type 1'] == 'Flamer', 'Legendary'] = 'True'
+print("将'Type 1'为'Flamer'的对象里的'Legendary'更改为'True'\n")
+print(df.head(8))
+
+# 数据统计
+print("根据HP的平均值,从高到低进行排序,用Type 1进行显示\n")
+print(df.groupby(['Type 1']).mean().sort_values('HP', ascending=False))
+print("统计发现:Type1为Dragon的平均HP最高")
+
+print("对同一个Type 1的对象的每一个数据进行求和\n")
+print(df.groupby(['Type 1']).sum())
+
+print("根据Type 1, Type 2来统计不同对象的个数\n")
+df['count'] = 1
+print(df.groupby(['Type 1', 'Type 2']).count()['count'])
+
+# 如何快速处理大量数据
+for df in pd.read_csv('E:\Projects\PythonProjects\MachineLearning\LinearRegressionTutorial\DataSet\pokemon_data.csv', chunksize=5):
+    print("CHUNK DF")
+    print(df)
+# tips: 参数chunksize 5代表同时处理5行数据,这个数字大小取决于你的计算机能力如何,可以很大,也可以为1
