@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import pickle
 import matplotlib.pyplot as plt
 from sklearn import linear_model
 
@@ -36,3 +37,13 @@ plt.ylabel('price', fontsize=20)
 plt.scatter(df.area, df.price, color='red', marker='+')
 plt.plot(df.area, reg.predict(df[['area']]), color='blue')
 plt.show()
+
+""" 保存训练好的模型,并且直接使用它 """
+# 此时会在该路径下生成一个二进制文件
+with open('model_pickle', 'wb') as f:
+    pickle.dump(reg, f)
+# 接下来直接使用模型进行预测
+with open('model_pickle', 'rb') as f:
+    mp = pickle.load(f)
+
+print(mp.predict([[5000]]))
