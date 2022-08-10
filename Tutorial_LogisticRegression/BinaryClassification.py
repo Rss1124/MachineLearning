@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 # 使用另一个线性回归模型LogisticRegression
 from sklearn.linear_model import LogisticRegression
 
-df = pd.read_csv("E:\Projects\PythonProjects\MachineLearning\ LogisticRegression\DataSet\insurance_data.csv")
+df = pd.read_csv("/Tutorial_LogisticRegression\DataSet\insurance_data.csv")
 plt.scatter(df.age, df.bought_insurance, marker='+', color='red')
 plt.show()
 
