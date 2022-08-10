@@ -1,10 +1,12 @@
+# 预测一元函数的线性回归模型
+
 import pandas as pd
 import numpy as np
 import pickle
 import matplotlib.pyplot as plt
 from sklearn import linear_model
 
-df = pd.read_csv('E:\Projects\PythonProjects\MachineLearning\LinearRegressionTutorial\DataSet\homeprice.csv')
+df = pd.read_csv('E:\Projects\PythonProjects\MachineLearning\Tutorial_LinearRegressionTutorial\DataSet\homeprice.csv')
 """ 画出数据集对应的散点图 """
 plt.xlabel('area(sqr ft)')
 plt.ylabel('price(RS$)')
@@ -25,7 +27,7 @@ print(reg.intercept_)
 
 """ 对测试数据集进行预测 """
 # 导入测试数据集
-df_test = pd.read_csv("E:\Projects\PythonProjects\MachineLearning\LinearRegressionTutorial\DataSet\homeprice_test.csv")
+df_test = pd.read_csv("E:\Projects\PythonProjects\MachineLearning\Tutorial_LinearRegressionTutorial\DataSet\homeprice_test.csv")
 # 将数据集放入线性回归模型进行预测
 df_test_predict = reg.predict(df_test)
 df_test['prices'] = df_test_predict

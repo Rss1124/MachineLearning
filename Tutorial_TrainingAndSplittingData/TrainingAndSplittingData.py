@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-df = pd.read_csv("E:\Projects\PythonProjects\MachineLearning\TrainingAndSplittingData\DataSet\carprices.csv")
+df = pd.read_csv("E:\Projects\PythonProjects\MachineLearning\Tutorial_TrainingAndSplittingData\DataSet\carprices.csv")
 plt.scatter(df['Mileage'], df['Sell Price'])
 plt.show()
 plt.scatter(df['Age'], df['Sell Price'])
