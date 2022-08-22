@@ -32,14 +32,15 @@ class DecisionTreeClassifier:
 
     def build_tree(self, dataset, curr_depth=0):
         # 使用递归函数来构建决策树
-        x, y = dataset[:, :-1], dataset[:, :-1]
-        num_samples, num_features = np.shape(
-            x)  # num_samples用来表示当前数据集里面的"不同类别"数据的个数,比如本例中iris花朵有三种类型,如果当前数据中"只有一种类型"的数据,那么说明这个数据集非常"有序",就不用进行split了
+        x, y = dataset[:, :-1], dataset[:, -1]
+        num_samples, num_features = np.shape(x)  # num_samples
+        # 用来表示当前数据集里面的"不同类别(type)"数据的个数,比如本例中iris花朵有三种类型,如果当前数据中"只有一种类型"的数据,那么说明这个数据集非常"有序",就不用进行split了
+        # num_features用来表示花朵的4个属性('sepal_length', 'sepal_width', 'petal_length', 'petal_width')
 
         # 如果当前数据集出现了两种及两种以上的数据,就要进行split操作
         if num_samples >= self.min_samples_split and curr_depth <= self.max_depth:
             # 找最佳的决策条件
-            best_split = self.get_best_split(dataset, num_samples, num_features)
+            best_split = self.get_best_split(dataset, num_features)
             if best_split["info_gain"] > 0:
                 # 向左孩子出发
                 left_subtree = self.build_tree(best_split["dataset_left"], curr_depth + 1)
@@ -52,7 +53,7 @@ class DecisionTreeClassifier:
         leaf_value = self.calculate_leaf_value(y)
         return Node(value=leaf_value)
 
-    def get_best_split(self, dataset, num_samples, num_features):
+    def get_best_split(self, dataset, num_features):
         # 将最佳决策条件保留下来
         best_split = {}
         max_info_gain = -float("inf")
