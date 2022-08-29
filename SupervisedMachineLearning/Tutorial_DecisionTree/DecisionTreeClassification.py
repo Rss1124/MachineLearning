@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 
 col_names = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'type']
-data = pd.read_csv("E:\Projects\PythonProjects\MachineLearning\Tutorial_DecisionTree\DataSet\iris.csv")
+data = pd.read_csv("E:\Projects\PythonProjects\MachineLearning\SupervisedMachineLearning\Tutorial_DecisionTree\DataSet\iris.csv")
 
 """ 使用class定义决策树的节点("决策节点"和"叶子节点") """
 class Node:

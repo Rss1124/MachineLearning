@@ -1,3 +1,5 @@
+# SVM的概念还要自己去了解
+
 import pandas as pd
 from sklearn.datasets import load_digits
 from matplotlib import pyplot as plt

@@ -3,7 +3,7 @@ import pandas as pd
 """
 将数据集导入pandas
 """
-df = pd.read_csv('E:\Projects\PythonProjects\MachineLearning\Tutorial_LinearRegressionTutorial\DataSet\pokemon_data.csv')
+df = pd.read_csv('E:\Projects\PythonProjects\MachineLearning\SupervisedMachineLearning\Tutorial_LinearRegressionTutorial\DataSet\pokemon_data.csv')
 print(df)
 
 """
@@ -93,7 +93,7 @@ df['count'] = 1
 print(df.groupby(['Type 1', 'Type 2']).count()['count'])
 
 # 如何快速处理大量数据
-for df in pd.read_csv('E:\Projects\PythonProjects\MachineLearning\Tutorial_LinearRegressionTutorial\DataSet\pokemon_data.csv', chunksize=5):
+for df in pd.read_csv('E:\Projects\PythonProjects\MachineLearning\SupervisedMachineLearning\Tutorial_LinearRegressionTutorial\DataSet\pokemon_data.csv', chunksize=5):
     print("CHUNK DF")
     print(df)
 # tips: 参数chunksize 5代表同时处理5行数据,这个数字大小取决于你的计算机能力如何,可以很大,也可以为1

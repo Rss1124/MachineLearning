@@ -9,7 +9,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
-dfle = pd.read_csv("E:\Projects\PythonProjects\MachineLearning\Tutorial_DummyVariablesAndOneHotEncoding\DataSet\homeprice_nominal_data.csv")
+dfle = pd.read_csv(
+    "E:\Projects\PythonProjects\MachineLearning\SupervisedMachineLearning\Tutorial_DummyVariablesAndOneHotEncoding\DataSet\homeprice_nominal_data.csv")
 le = LabelEncoder()
 print(le.fit_transform(dfle.town))  # 文字变量重新赋值
 dfle.town = le.fit_transform(dfle.town)

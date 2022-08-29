@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LogisticRegression  # 因为要预测的数据是"是否离开公司",所以本次采用逻辑回归
 
-df = pd.read_csv("E:\Projects\PythonProjects\MachineLearning\Project_PredictEmployeeRetention\DataSet\HR_comma_sep.csv")
+df = pd.read_csv("E:\Projects\PythonProjects\MachineLearning\SupervisedMachineLearning\Project_PredictEmployeeRetention\DataSet\HR_comma_sep.csv")
 
 """ 处理数据集 """
 # 使用LabelEncoder处理文字变量

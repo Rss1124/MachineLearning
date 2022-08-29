@@ -6,7 +6,8 @@
 
 from sklearn.linear_model import LinearRegression
 import pandas as pd
-df = pd.read_csv("E:\Projects\PythonProjects\MachineLearning\Tutorial_DummyVariablesAndOneHotEncoding\DataSet\homeprice_nominal_data.csv")
+df = pd.read_csv(
+    "E:\Projects\PythonProjects\MachineLearning\SupervisedMachineLearning\Tutorial_DummyVariablesAndOneHotEncoding\DataSet\homeprice_nominal_data.csv")
 dummies = pd.get_dummies(df.town)  # 获取虚拟变量
 merged = pd.concat([df, dummies], axis='columns')  # 将虚拟变量与原生数据集合并
 

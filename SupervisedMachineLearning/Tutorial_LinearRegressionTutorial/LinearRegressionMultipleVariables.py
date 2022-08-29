@@ -6,7 +6,7 @@ import math
 from sklearn import linear_model
 
 """ 导入训练数据集 """
-df = pd.read_csv("E:\Projects\PythonProjects\MachineLearning\Tutorial_LinearRegressionTutorial\DataSet\homeprice_complex_data.csv")
+df = pd.read_csv("E:\Projects\PythonProjects\MachineLearning\SupervisedMachineLearning\Tutorial_LinearRegressionTutorial\DataSet\homeprice_complex_data.csv")
 # 处理数据集中的无效数据(bedroom中的nan):使用bedroom的中位数进行填补
 median_bedrooms = math.floor(df.bedrooms.median())
 df.bedrooms = df.bedrooms.fillna(median_bedrooms)
